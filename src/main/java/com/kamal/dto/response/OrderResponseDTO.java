@@ -16,7 +16,7 @@ public class OrderResponseDTO {
 
     private Long id;
     private Double totalPrice;
-    private OrderStatus orderStatus;
+    private OrderStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Long userId;
