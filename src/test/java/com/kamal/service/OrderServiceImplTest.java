@@ -59,7 +59,6 @@ public class OrderServiceImplTest {
 
         OrderResponseDTO responseDTO = OrderResponseDTO.builder()
                 .totalPrice(50.0)
-
                 .status(OrderStatus.PENDING)
                 .build();
 
@@ -186,10 +185,10 @@ public class OrderServiceImplTest {
         String result = orderService.deleteOrder(1L);
 
         assertNotNull(result);
-        assertEquals("Order deleted successfully",result);
+        assertEquals("Order deleted successfully", result);
 
-        verify(orderRepository,times(1)).findById(1L);
-        verify(orderRepository,times(1)).delete(order);
+        verify(orderRepository, times(1)).findById(1L);
+        verify(orderRepository, times(1)).delete(order);
 
 
     }
