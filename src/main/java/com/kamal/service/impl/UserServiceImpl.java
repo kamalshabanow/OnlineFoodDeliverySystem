@@ -1,6 +1,7 @@
 package com.kamal.service.impl;
 
 import com.kamal.dto.request.UserRequestDTO;
+import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
 import com.kamal.entity.User;
 import com.kamal.repository.UserRepository;
@@ -20,6 +21,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+
+    // CRUD
     @Override
     public List<UserResponseDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
@@ -64,5 +67,59 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
 
         return "User deleted successfully";
+    }
+
+    // Beside methods
+
+    @Override
+    public UserResponseDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email).
+                orElseThrow(() -> new RuntimeException("User not found with email: " + email));
+
+        return modelMapper.map(user,UserResponseDTO.class);
+    }
+
+    @Override
+    public List<UserResponseDTO> searchUsersByName(String name) {
+        List<User> users = userRepository.findByNameContainingIgnoreCase(name);
+
+        return users.stream()
+                .map(user -> modelMapper.map(user,UserResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    @Override
+    public String deactivateUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        user.setActive(false);
+        userRepository.save(user);
+
+        return "User deactivated successfully";
+    }
+
+    @Transactional
+    @Override
+    public String changeUserPassword(Long id, String newPassword) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
+
+        user.setPassword(newPassword);
+        userRepository.save(user);
+
+        return "Password updated successfully";
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getUserOrders(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
+
+        return user.getOrders().stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .collect(Collectors.toList());
     }
 }

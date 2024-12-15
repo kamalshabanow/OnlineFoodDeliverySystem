@@ -29,6 +29,7 @@ public class OrderServiceImpl implements OrderService {
     private final MenuItemRepository menuItemRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional(readOnly = true)
     @Override
     public List<OrderResponseDTO> getAllOrders() {
         List<Order> orders = orderRepository.findAll();
@@ -37,6 +38,7 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     @Override
     public OrderResponseDTO getOrderById(Long id) {
         Order order = orderRepository.findById(id).orElseThrow();
