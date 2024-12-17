@@ -130,7 +130,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public List<UserResponseDTO> getActiveUsers() {
-        List<User> activeUsers = userRepository.findByActiveTrue();
+        List<User> activeUsers = userRepository.findByActiveIsTrue();
 
         return activeUsers.stream()
                 .map(user -> modelMapper.map(user, UserResponseDTO.class))
