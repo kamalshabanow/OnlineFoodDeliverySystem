@@ -17,8 +17,9 @@ public interface UserService {
 
     //Beside methods
     UserResponseDTO getUserByEmail(String email);
-    List<UserResponseDTO> searchUsersByName(String name);
+    List<UserResponseDTO> getUsersByName(String name);
     String deactivateUser(Long id);
     String changeUserPassword(Long id, String newPassword);
     List<OrderResponseDTO> getUserOrders(Long userId);
+    List<UserResponseDTO> getActiveUsers();
 }

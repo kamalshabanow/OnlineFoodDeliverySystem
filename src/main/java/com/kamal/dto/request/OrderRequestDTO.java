@@ -18,8 +18,3 @@ public class OrderRequestDTO {
     private Long restaurantId;
 
 }
-
-
-
-
-

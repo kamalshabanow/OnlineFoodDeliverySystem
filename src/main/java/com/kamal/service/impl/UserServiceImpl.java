@@ -43,6 +43,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public String createUser(UserRequestDTO userRequestDTO) {
+        if(existsByEmail(userRequestDTO.getEmail())) {
+            throw new RuntimeException("Email already exists");
+        }
+
         User user = modelMapper.map(userRequestDTO, User.class);
         user.setActive(true);
         userRepository.save(user);
@@ -80,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserResponseDTO> searchUsersByName(String name) {
+    public List<UserResponseDTO> getUsersByName(String name) {
         List<User> users = userRepository.findByNameContainingIgnoreCase(name);
 
         return users.stream()
@@ -121,5 +125,20 @@ public class UserServiceImpl implements UserService {
         return user.getOrders().stream()
                 .map(order -> modelMapper.map(order, OrderResponseDTO.class))
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<UserResponseDTO> getActiveUsers() {
+        List<User> activeUsers = userRepository.findByActiveTrue();
+
+        return activeUsers.stream()
+                .map(user -> modelMapper.map(user, UserResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+
+    private boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }

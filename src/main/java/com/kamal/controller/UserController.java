@@ -4,6 +4,7 @@ import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
 import com.kamal.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,51 +22,51 @@ public class UserController {
 
     //CRUD
     @GetMapping
-    public List<UserResponseDTO> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{id}")
-    public UserResponseDTO getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @PostMapping("/create-user")
     @ResponseStatus(HttpStatus.CREATED)
-    public String createUser(@RequestBody UserRequestDTO userRequestDTO) {
-        return userService.createUser(userRequestDTO);
+    public ResponseEntity<String> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
     @PutMapping("/update-user/{id}")
-    public String updateUser(@PathVariable Long id, @RequestBody UserRequestDTO userRequestDTO) {
-        return userService.updateUser(id, userRequestDTO);
+    public ResponseEntity<String> updateUser(@PathVariable Long id,@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        return ResponseEntity.ok(userService.updateUser(id, userRequestDTO));
     }
 
     @DeleteMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        return userService.deleteUser(id);
+    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+        return ResponseEntity.ok(userService.deleteUser(id));
     }
 
     //Beside methods
 
-    @GetMapping("/by-email/{email}")
-    public UserResponseDTO getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+    @GetMapping("/by-email")
+    public ResponseEntity<UserResponseDTO> getUserByEmail(@RequestParam String email) {
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
-    @GetMapping("/search-by-name/{name}")
-    public List<UserResponseDTO> searchUsersByName(@PathVariable String name) {
-        return userService.searchUsersByName(name);
+    @GetMapping("/search-by-name")
+    public ResponseEntity<List<UserResponseDTO>> searchUsersByName(@RequestParam String name) {
+        return ResponseEntity.ok(userService.getUsersByName(name));
     }
 
 
-    @PutMapping("/deactivate-user/{id}")
+    @PatchMapping("/deactivate-user/{id}")
     public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.deactivateUser(id));
     }
 
 
-    @PutMapping("/change-password/{id}")
+    @PatchMapping("/change-password/{id}")
     public ResponseEntity<String> changeUserPassword(@PathVariable Long id, @RequestBody String newPassword) {
         return ResponseEntity.ok(userService.changeUserPassword(id, newPassword));
     }
@@ -75,4 +76,9 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserOrders(userId));
     }
 
+    //
+    @GetMapping("/get-active")
+    public ResponseEntity<List<UserResponseDTO>> getActiveUsers() {
+        return ResponseEntity.ok(userService.getActiveUsers());
+    }
 }
