@@ -28,7 +28,7 @@ public interface MenuItemService {
 
 
     //Analytical Methods
-    List<MenuItemResponseDTO> getMostPopularItems(int limit);
+    List<MenuItemResponseDTO> getMostPopularItems(Long restaurantId);
     List<MenuItemResponseDTO> getMenuItemsSortedByPrice(boolean ascending);
     Double getAverageMenuItemPrice(Long restaurantId); //average menu item price for a restaurant
 

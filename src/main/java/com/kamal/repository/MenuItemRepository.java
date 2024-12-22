@@ -3,6 +3,7 @@ package com.kamal.repository;
 import com.kamal.entity.MenuItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
@@ -22,8 +23,8 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
 
     List<MenuItem> findAllByOrderByPriceDesc();
 
-    @Query("SELECT m FROM MenuItem M JOIN M.order o GROUP BY m ORDER BY COUNT(o) DESC")
-    List<MenuItem> findPopularMenuItems(int limit);
+    @Query("SELECT m FROM MenuItem m WHERE m.restaurant.id = :restaurantId")
+    List<MenuItem> findPopularMenuItems(@Param("restaurantId") Long restaurantId);
 
 
 }

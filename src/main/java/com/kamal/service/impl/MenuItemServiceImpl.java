@@ -171,8 +171,8 @@ public class MenuItemServiceImpl implements MenuItemService {
     //Analytical Methods
 
     @Override
-    public List<MenuItemResponseDTO> getMostPopularItems(int limit) {
-        List<MenuItem> popularMenuItems = menuItemRepository.findPopularMenuItems(limit);
+    public List<MenuItemResponseDTO> getMostPopularItems(Long restaurantId) {
+        List<MenuItem> popularMenuItems = menuItemRepository.findPopularMenuItems(restaurantId);
 
         return popularMenuItems.stream()
                 .map(menuItem -> modelMapper.map(menuItem, MenuItemResponseDTO.class))
@@ -200,6 +200,8 @@ public class MenuItemServiceImpl implements MenuItemService {
                 .orElse(0.0);
 
     }
+
+    //Validation Methods
 
     @Override
     public boolean isMenuItemExists(Long restaurantId) {
