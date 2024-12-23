@@ -9,13 +9,16 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface RestaurantRepository  extends JpaRepository<Restaurant,Long> {
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
     //Search and Filter Methods
     List<Restaurant> findByCuisineTypeIgnoreCase(String cuisineType);
+
     @Query("SELECT r FROM Restaurant r WHERE r.isOpen = true")
     List<Restaurant> findByIsOpenTrue();
+
     List<Restaurant> findByRatingGreaterThanEqual(Double minRating);
+
     List<Restaurant> findByNameContainingIgnoreCase(String name);
 
     //Analytical Methods

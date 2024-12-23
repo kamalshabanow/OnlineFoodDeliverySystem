@@ -77,7 +77,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String updateOrder(Long id, OrderRequestDTO orderRequestDTO) {
         Order order = orderRepository.findById(id).orElseThrow();
-        modelMapper.map(orderRequestDTO,order);
+        modelMapper.map(orderRequestDTO, order);
         orderRepository.save(order);
 
         return "Order updated successfully";
@@ -124,6 +124,17 @@ public class OrderServiceImpl implements OrderService {
                 .sum();
     }
 
+    @Override
+    public String updateOrderStatus(Long orderId, OrderStatus newStatus) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        order.setStatus(newStatus);
+        orderRepository.save(order);
+
+        return "Order status has updated successfully";
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<OrderResponseDTO> getUserOrderHistory(Long userId) {
@@ -151,8 +162,8 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
-        if(order.getStatus() == OrderStatus.DELIVERED){
-            throw  new RuntimeException("Cannot cancel order after delivered");
+        if (order.getStatus() == OrderStatus.DELIVERED) {
+            throw new RuntimeException("Cannot cancel order after delivered");
         }
 
         order.setStatus(OrderStatus.CANCELED);

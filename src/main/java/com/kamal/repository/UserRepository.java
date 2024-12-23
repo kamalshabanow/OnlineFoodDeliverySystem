@@ -9,11 +9,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
+
     List<User> findByNameContainingIgnoreCase(String name);
+
     @Query(value = "SELECT u FROM User u WHERE u.isActive = true")
     List<User> findByActiveIsTrue();
+
     boolean existsByEmail(String email);
 }

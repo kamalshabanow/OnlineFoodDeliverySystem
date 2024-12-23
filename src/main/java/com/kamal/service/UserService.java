@@ -10,16 +10,25 @@ public interface UserService {
 
     //CRUD
     List<UserResponseDTO> getAllUsers();
+
     UserResponseDTO getUserById(Long id);
+
     String createUser(UserRequestDTO userRequestDTO);
+
     String updateUser(Long id, UserRequestDTO userRequestDTO);
+
     String deleteUser(Long id);
 
     //Beside methods
     UserResponseDTO getUserByEmail(String email);
+
     List<UserResponseDTO> getUsersByName(String name);
+
     String deactivateUser(Long id);
+
     String changeUserPassword(Long id, String newPassword);
+
     List<OrderResponseDTO> getUserOrders(Long userId);
+
     List<UserResponseDTO> getActiveUsers();
 }

@@ -10,10 +10,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order,Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByStatus(OrderStatus orderStatus);
+
     Long countByStatus(OrderStatus orderStatus);
+
     List<Order> findTop10ByOrderByCreatedAtDesc(Pageable pageable);
+
     List<Order> findByCreatedAtBetween(LocalDateTime startDate, LocalDateTime endDate);
 }
