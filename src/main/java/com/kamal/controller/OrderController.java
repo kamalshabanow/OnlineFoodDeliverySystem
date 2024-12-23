@@ -5,6 +5,7 @@ import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,24 +18,23 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<OrderResponseDTO> getAllOrders(){
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderResponseDTO>> getAllOrders(){
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{id}")
-    public OrderResponseDTO getOrderById(@PathVariable Long id){
-        return orderService.getOrderById(id);
+    public ResponseEntity<OrderResponseDTO> getOrderById(@PathVariable Long id){
+        return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public String createOrder(@RequestBody OrderRequestDTO orderRequestDTO){
-        return orderService.createOrder(orderRequestDTO);
+    public ResponseEntity<String> createOrder(@RequestBody OrderRequestDTO orderRequestDTO){
+        return new ResponseEntity<>(orderService.createOrder(orderRequestDTO),HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public String updateOrder(@PathVariable Long id, @RequestBody OrderRequestDTO orderRequestDTO){
-        return orderService.updateOrder(id,orderRequestDTO);
+    public ResponseEntity<String> updateOrder(@PathVariable Long id, @RequestBody OrderRequestDTO orderRequestDTO){
+        return ResponseEntity.ok(orderService.updateOrder(id,orderRequestDTO));
     }
 
     @DeleteMapping("/delete/{id}")

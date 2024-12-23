@@ -6,5 +6,5 @@ public enum OrderStatus {
     IN_PROGRESS,   //SIFARISH HAZIRLANIR
     SHIPPED,      //SIFARISH YOLA CIXIB
     DELIVERED,
-    CANCELED
+    CANCELED;
 }

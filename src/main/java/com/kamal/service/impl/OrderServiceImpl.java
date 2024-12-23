@@ -1,5 +1,6 @@
 package com.kamal.service.impl;
 
+import com.kamal.constant.OrderStatus;
 import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.entity.MenuItem;
@@ -13,9 +14,11 @@ import com.kamal.repository.UserRepository;
 import com.kamal.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,5 +90,90 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.delete(order);
 
         return "Order deleted successfully";
+    }
+
+    //Additional Methods
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getOrdersByStatus(OrderStatus orderStatus) {
+        List<Order> orders = orderRepository.findByStatus(orderStatus);
+
+        return orders.stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getRecentOrders(int limit) {
+        List<Order> recentOrders = orderRepository
+                .findTop10ByOrderByCreatedAtDesc(PageRequest.of(0, limit));
+
+        return recentOrders.stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Double calculateTotalRevenue() {
+        return orderRepository.findByStatus(OrderStatus.DELIVERED)
+                .stream()
+                .mapToDouble(Order::getTotalPrice)
+                .sum();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getUserOrderHistory(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return user.getOrders().stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getRestaurantOrders(Long restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RuntimeException("Restaurant not found"));
+
+        return restaurant.getOrders().stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public String cancelOrder(Long orderId) {
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if(order.getStatus() == OrderStatus.DELIVERED){
+            throw  new RuntimeException("Cannot cancel order after delivered");
+        }
+
+        order.setStatus(OrderStatus.CANCELED);
+        orderRepository.save(order);
+
+        return "Order canceled successfully";
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Long countOrdersByStatus(OrderStatus orderStatus) {
+        return orderRepository.countByStatus(orderStatus);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<OrderResponseDTO> getOrdersByDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        List<Order> orders = orderRepository.findByCreatedAtBetween(startDate, endDate);
+
+        return orders.stream()
+                .map(order -> modelMapper.map(order, OrderResponseDTO.class))
+                .toList();
     }
 }
