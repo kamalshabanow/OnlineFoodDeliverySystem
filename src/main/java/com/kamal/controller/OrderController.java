@@ -1,5 +1,6 @@
 package com.kamal.controller;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kamal.constant.OrderStatus;
 import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
@@ -99,6 +100,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.countOrdersByStatus(status));
     }
 
+    @JsonFormat(pattern="yyyy-MM-dd")
     @GetMapping("/orders-by-date-range")
     public ResponseEntity<List<OrderResponseDTO>> getOrdersByDateRange(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
