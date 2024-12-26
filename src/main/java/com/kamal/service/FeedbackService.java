@@ -27,7 +27,5 @@ public interface FeedbackService {
     List<RestaurantResponseDTO> getMostImprovedRestaurants(int days, int limit);
     List<FeedbackResponseDTO> getRecentNegativeFeedbacks(Double ratingThreshold, int days);
 
-    List<RestaurantResponseDTO> getRestaurantsWithDecliningRatings(int months);
-    List<FeedbackResponseDTO> getFeedbackRequiringResponse();
     List<FeedbackResponseDTO> getDeliveryRelatedFeedbacks(Long restaurantId);
 }
