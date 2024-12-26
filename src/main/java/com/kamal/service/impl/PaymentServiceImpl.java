@@ -161,7 +161,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentResponseDTO> getRecentPayments(int limit) {
-        List<Payment> recentPayments = paymentRepository.findByOrderByPaidAtDesc(PageRequest.of(0, limit));
+        List<Payment> recentPayments = paymentRepository
+                .findByOrderByPaidAtDesc(PageRequest.of(0, limit));
 
         return recentPayments.stream()
                 .map(payment -> modelMapper.map(payment,PaymentResponseDTO.class))

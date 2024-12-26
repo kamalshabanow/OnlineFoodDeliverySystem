@@ -73,15 +73,15 @@ public class MenuItemController {
     @PutMapping("/update-prices")
     public ResponseEntity<String> updateMenuItemPricesByPercentage(
             @RequestBody List<Long> itemIds,
-            @RequestParam Double percentage ) {
+            @RequestParam Double percentage) {
 
-        return ResponseEntity.ok(menuItemService.updateMenuItemPricesByPercentage(itemIds,percentage));
+        return ResponseEntity.ok(menuItemService.updateMenuItemPricesByPercentage(itemIds, percentage));
     }
 
     @PostMapping("/copy-menu-items")
     public ResponseEntity<String> copyMenuItems(
             @RequestParam Long sourceRestaurantId,
-            @RequestParam Long targetRestaurantId ) {
+            @RequestParam Long targetRestaurantId) {
 
         return ResponseEntity.ok(menuItemService.copyMenuItems(sourceRestaurantId, targetRestaurantId));
     }
@@ -90,36 +90,43 @@ public class MenuItemController {
 
     @GetMapping("/popular-items")
     public ResponseEntity<List<MenuItemResponseDTO>> getMostPopularItems(
-            @RequestParam Long restaurantId ) {
+            @RequestParam Long restaurantId) {
 
         return ResponseEntity.ok(menuItemService.getMostPopularItems(restaurantId));
     }
 
     @GetMapping("sorted-by-price")
     public ResponseEntity<List<MenuItemResponseDTO>> getMenuItemsSortedByPrice(
-            @RequestParam boolean ascending ) {
+            @RequestParam boolean ascending) {
         return ResponseEntity.ok(menuItemService.getMenuItemsSortedByPrice(ascending));
     }
 
-    @GetMapping("/average-item-price")
-    public ResponseEntity<Double> getAverageMenuItemPrice(@RequestParam Long restaurantId) {
+    @GetMapping("/average-item-price/{restaurantId}")
+    public ResponseEntity<Double> getAverageMenuItemPrice(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(menuItemService.getAverageMenuItemPrice(restaurantId));
     }
 
     //Validation Endpoints
 
-    @GetMapping("/exists")
-    public ResponseEntity<Boolean> isMenuItemExists(@RequestParam Long restaurantId) {
+    @PostMapping("/exists/{restaurantId}")
+    public ResponseEntity<Boolean> isMenuItemExists(@PathVariable Long restaurantId) {
         return ResponseEntity.ok(menuItemService.isMenuItemExists(restaurantId));
     }
+
+    @PostMapping("/valid-image-url")
+    public ResponseEntity<Boolean> isValidImageUrl(
+            @RequestBody String imageUrl) {
+
+        return ResponseEntity.ok(menuItemService.isValidImageUrl(imageUrl));
+    }
+
 
     //Special Endpoints
 
     @GetMapping("/recommended-items")
-    public ResponseEntity<List<MenuItemResponseDTO>> getRecommendedMenuItems(@RequestParam Long userId){
+    public ResponseEntity<List<MenuItemResponseDTO>> getRecommendedMenuItems(@RequestParam Long userId) {
         return ResponseEntity.ok(menuItemService.getRecommendedMenuItems(userId));
     }
-
 
 
 }

@@ -159,7 +159,8 @@ public class FeedbackServiceImpl implements FeedbackService {
     public List<FeedbackResponseDTO> getRecentNegativeFeedbacks(Double ratingThreshold, int days) {
         LocalDateTime cutoffDate = LocalDateTime.now().minusDays(days);
 
-        List<Feedback> negativeFeedbacks = feedbackRepository.findByRatingLessThanAndCreatedAtAfter(ratingThreshold, cutoffDate);
+        List<Feedback> negativeFeedbacks = feedbackRepository
+                .findByRatingLessThanAndCreatedAtAfter(ratingThreshold, cutoffDate);
 
         return negativeFeedbacks.stream()
                 .map(feedback -> modelMapper.map(feedback, FeedbackResponseDTO.class))

@@ -21,7 +21,7 @@ public interface RestaurantService {
 
     String deleteRestaurant(Long id);
 
-    //Other methods
+    //Additional methods
     List<RestaurantResponseDTO> getRestaurantByCuisineType(String cuisineType);
 
     List<RestaurantResponseDTO> getOpenRestaurants();

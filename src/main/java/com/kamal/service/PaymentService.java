@@ -28,7 +28,7 @@ public interface PaymentService {
 
     List<PaymentResponseDTO> getCompletedPayments();
 
-    //claude
+    //
     String refundPayment(Long paymentId);
 
     String processPayment(Long paymentId);
