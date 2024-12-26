@@ -17,15 +17,13 @@ public interface FeedbackService {
 
     //Additional Methods
 
-    Double getAverageRestaurantRating(Long restaurantId);
+    Double getAverageRestaurantRatingByFeedbacks(Long restaurantId);
     List<FeedbackResponseDTO> getLatestRestaurantReviews(Long restaurantId, int limit);
 
     List<FeedbackResponseDTO> getUserFeedbacks(Long userId);
     boolean hasUserReviewedOrder(Long userId, Long orderId);
 
     List<RestaurantResponseDTO> getTrendingRestaurantsByFeedback(int days, int limit);
-    List<RestaurantResponseDTO> getMostImprovedRestaurants(int days, int limit);
     List<FeedbackResponseDTO> getRecentNegativeFeedbacks(Double ratingThreshold, int days);
 
-    List<FeedbackResponseDTO> getDeliveryRelatedFeedbacks(Long restaurantId);
 }

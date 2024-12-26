@@ -95,7 +95,7 @@ public class FeedbackServiceImpl implements FeedbackService {
     //Additional methods
 
     @Override
-    public Double getAverageRestaurantRating(Long restaurantId) {
+    public Double getAverageRestaurantRatingByFeedbacks(Long restaurantId) {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new RuntimeException("Restaurant not found"));
 
@@ -156,11 +156,6 @@ public class FeedbackServiceImpl implements FeedbackService {
 
 
     @Override
-    public List<RestaurantResponseDTO> getMostImprovedRestaurants(int days, int limit) {
-        return List.of();
-    }
-
-    @Override
     public List<FeedbackResponseDTO> getRecentNegativeFeedbacks(Double ratingThreshold, int days) {
         LocalDateTime cutoffDate = LocalDateTime.now().minusDays(days);
 
@@ -172,8 +167,4 @@ public class FeedbackServiceImpl implements FeedbackService {
     }
 
 
-    @Override
-    public List<FeedbackResponseDTO> getDeliveryRelatedFeedbacks(Long restaurantId) {
-        return List.of();
-    }
 }
