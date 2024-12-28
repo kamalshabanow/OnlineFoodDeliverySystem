@@ -1,5 +1,6 @@
 package com.kamal.service.impl;
 
+import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
@@ -102,18 +103,6 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
 
         return "User deactivated successfully";
-    }
-
-    @Transactional
-    @Override
-    public String changeUserPassword(Long id, String newPassword) {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
-
-        user.setPassword(newPassword);
-        userRepository.save(user);
-
-        return "Password updated successfully";
     }
 
     @Transactional(readOnly = true)

@@ -1,15 +1,14 @@
 package com.kamal.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kamal.constant.UserRole;
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import lombok.*;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class UserRequestDTO {
+public class RegisterRequestDTO {
 
     private String name;
     private String surname;
@@ -17,6 +16,4 @@ public class UserRequestDTO {
     private String password;
     private String phoneNumber;
     private String address;
-    @JsonIgnore
-    private UserRole role;
 }

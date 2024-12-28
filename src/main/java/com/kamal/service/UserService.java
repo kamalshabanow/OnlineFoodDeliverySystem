@@ -1,5 +1,6 @@
 package com.kamal.service;
 
+import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
@@ -25,8 +26,6 @@ public interface UserService {
     List<UserResponseDTO> getUsersByName(String name);
 
     String deactivateUser(Long id);
-
-    String changeUserPassword(Long id, String newPassword);
 
     List<OrderResponseDTO> getUserOrders(Long userId);
 

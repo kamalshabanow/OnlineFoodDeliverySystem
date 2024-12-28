@@ -1,8 +1,10 @@
 package com.kamal.controller;
 
+import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
+import com.kamal.service.AuthService;
 import com.kamal.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final AuthService authService;
 
 
     //CRUD
@@ -63,12 +66,6 @@ public class UserController {
     @PatchMapping("/deactivate-user/{id}")
     public ResponseEntity<String> deactivateUser(@PathVariable Long id) {
         return ResponseEntity.ok(userService.deactivateUser(id));
-    }
-
-
-    @PatchMapping("/change-password/{id}")
-    public ResponseEntity<String> changeUserPassword(@PathVariable Long id, @RequestBody String newPassword) {
-        return ResponseEntity.ok(userService.changeUserPassword(id, newPassword));
     }
 
     @GetMapping("/user-orders/{userId}")

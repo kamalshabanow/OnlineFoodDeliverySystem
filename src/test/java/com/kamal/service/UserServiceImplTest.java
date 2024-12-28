@@ -1,6 +1,7 @@
 package com.kamal.service;
 
 import com.kamal.constant.UserRole;
+import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.UserResponseDTO;
 import com.kamal.entity.User;

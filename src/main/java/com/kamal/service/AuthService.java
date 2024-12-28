@@ -7,7 +7,6 @@ import com.kamal.dto.response.AuthResponse;
 import com.kamal.entity.User;
 import com.kamal.exception.AuthenticationException;
 import com.kamal.exception.InvalidPasswordException;
-import com.kamal.exception.InvalidTokenException;
 import com.kamal.exception.UserAlreadyExistsException;
 import com.kamal.repository.UserRepository;
 import com.kamal.security.JwtTokenProvider;
@@ -34,38 +33,36 @@ public class AuthService {
     private final CustomUserDetailsService customUserDetailsService;
     private final UserRepository userRepository;
     private AuthenticationManager authenticationManager;
-    private JwtTokenProvider tokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
-    public AuthService(AuthenticationManager authenticationManager, JwtTokenProvider tokenProvider, UserService userService, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
+    public AuthService(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService, PasswordEncoder passwordEncoder, CustomUserDetailsService customUserDetailsService, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
-        this.tokenProvider = tokenProvider;
+        this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.customUserDetailsService = customUserDetailsService;
         this.userRepository = userRepository;
     }
 
-    public AuthResponse login(AuthRequest request) {
+    public AuthResponse login(AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
+                            authRequest.getEmail(),
+                            authRequest.getPassword()
                     )
             );
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            String accessToken = tokenProvider.generateToken(authentication);
-            String refreshToken = tokenProvider.generateRefreshToken(authentication);
+            String accessToken = jwtTokenProvider.generateToken(authentication);
 
-            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            UserDetails userDetails = customUserDetailsService.loadUserByUsername(authRequest.getEmail());
 
             return AuthResponse.builder()
                     .token(accessToken)
-                    .refreshToken(refreshToken)
                     .email(userDetails.getUsername())
                     .authorities(userDetails.getAuthorities())
                     .build();
@@ -79,62 +76,34 @@ public class AuthService {
     public String register(UserRequestDTO request) {
 
         try {
-            if(userService.getUserByEmail(request.getEmail()) != null) {
-                throw new UserAlreadyExistsException("User already existst with email: " + request.getEmail());
+            if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+                throw new UserAlreadyExistsException("User already exists with email: " + request.getEmail());
             }
+            request.setEmail(request.getEmail());
 
             validatePassword(request.getPassword());
-
             request.setPassword(passwordEncoder.encode(request.getPassword()));
 
-            if(request.getRole() == null) {
+            if (request.getRole() == null) {
                 request.setRole(UserRole.CUSTOMER);
             }
 
             return userService.createUser(request);
 
-        }catch (Exception e) {
-            log.error("Error in register: ",e);
+        } catch (Exception e) {
+            log.error("Error in register: ", e);
             throw e;
         }
     }
 
     private void validatePassword(String password) {
-        if(password != null || password.length() < 6) {
+        if (password == null || password.length() < 6) {
             throw new InvalidPasswordException("Password must be at least 6 characters long");
         }
 
         //more password validation
     }
 
-    public AuthResponse refreshToken(String refreshToken) {
-        try {
-            if(!tokenProvider.validateToken(refreshToken)) {
-                throw new InvalidTokenException("Invalid refresh token");
-            }
-
-            String email = tokenProvider.getUsernameFromToken(refreshToken);
-
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-
-            UsernamePasswordAuthenticationToken authenticationToken =
-                    new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
-
-            String newAccessToken = tokenProvider.generateToken(authenticationToken);
-            String newRefreshToken = tokenProvider.generateRefreshToken(authenticationToken);
-
-            return AuthResponse.builder()
-                    .token(newAccessToken)
-                    .refreshToken(newRefreshToken)
-                    .email(userDetails.getUsername())
-                    .authorities(userDetails.getAuthorities())
-                    .build();
-        } catch (Exception e) {
-            log.error("Could not refresh token",e);
-            throw new InvalidTokenException("Could not refresh token");
-        }
-
-    }
 
     public void logout(String token) {
 
@@ -147,33 +116,21 @@ public class AuthService {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-            if(!passwordEncoder.matches(oldPassword,user.getPassword())) {
+            if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
                 throw new InvalidPasswordException("Invalid old password");
             }
 
             validatePassword(newPassword);
-
-            userService.changeUserPassword(userId,passwordEncoder.encode(newPassword));
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
         } catch (Exception e) {
-            log.error("Error in changePassword: ",e);
+            log.error("Error in changePassword: ", e);
             throw e;
         }
     }
 
-    public void resetPassword(String email) {
-        try {
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-
-            String temporaryPassword = generateTemporaryPassword();
-            userService.changeUserPassword(user.getId(),passwordEncoder.encode(temporaryPassword));
-        } catch (Exception e) {
-            log.error("Error in resetPassword: ", e);
-            throw e;
-        }
-    }
 
     private String generateTemporaryPassword() {
-        return UUID.randomUUID().toString().substring(0,8);
+        return UUID.randomUUID().toString().substring(0, 8);
     }
 }
