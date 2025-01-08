@@ -1,15 +1,16 @@
 package com.kamal.controller;
 
 import com.kamal.dto.request.AuthRequest;
-import com.kamal.dto.request.ChangePasswordRequest;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.AuthResponse;
 import com.kamal.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
