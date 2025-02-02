@@ -1,4 +1,4 @@
-package com.kamal.entity;
+package com.kamal.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

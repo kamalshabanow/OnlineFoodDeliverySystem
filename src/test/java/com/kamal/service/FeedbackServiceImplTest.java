@@ -1,14 +1,15 @@
 package com.kamal.service;
 
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import com.kamal.dto.request.FeedbackRequestDTO;
-import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.FeedbackResponseDTO;
-import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.entity.*;
+import com.kamal.model.entity.Feedback;
+import com.kamal.model.entity.Order;
+import com.kamal.model.entity.Restaurant;
+import com.kamal.model.entity.User;
 import com.kamal.repository.*;
 import com.kamal.service.impl.FeedbackServiceImpl;
-import com.kamal.service.impl.OrderServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

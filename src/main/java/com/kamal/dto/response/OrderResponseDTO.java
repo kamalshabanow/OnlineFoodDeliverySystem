@@ -1,7 +1,7 @@
 package com.kamal.dto.response;
 
 
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;

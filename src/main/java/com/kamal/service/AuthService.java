@@ -1,10 +1,10 @@
 package com.kamal.service;
 
-import com.kamal.constant.UserRole;
+import com.kamal.model.constant.UserRole;
 import com.kamal.dto.request.AuthRequest;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.AuthResponse;
-import com.kamal.entity.User;
+import com.kamal.model.entity.User;
 import com.kamal.exception.AuthenticationException;
 import com.kamal.exception.InvalidPasswordException;
 import com.kamal.exception.UserAlreadyExistsException;

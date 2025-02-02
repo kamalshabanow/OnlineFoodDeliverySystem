@@ -1,6 +1,6 @@
 package com.kamal.controller;
 
-import com.kamal.constant.PaymentStatus;
+import com.kamal.model.constant.PaymentStatus;
 import com.kamal.dto.request.PaymentRequestDTO;
 import com.kamal.dto.response.PaymentResponseDTO;
 import com.kamal.service.PaymentService;

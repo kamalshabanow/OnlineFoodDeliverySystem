@@ -1,6 +1,6 @@
 package com.kamal.service;
 
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 

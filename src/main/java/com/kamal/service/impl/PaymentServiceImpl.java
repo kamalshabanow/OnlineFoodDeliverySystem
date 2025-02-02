@@ -1,11 +1,11 @@
 package com.kamal.service.impl;
 
-import com.kamal.constant.PaymentStatus;
+import com.kamal.model.constant.PaymentStatus;
 import com.kamal.dto.request.PaymentRequestDTO;
 import com.kamal.dto.response.PaymentResponseDTO;
-import com.kamal.entity.Order;
-import com.kamal.entity.Payment;
-import com.kamal.entity.User;
+import com.kamal.model.entity.Order;
+import com.kamal.model.entity.Payment;
+import com.kamal.model.entity.User;
 import com.kamal.repository.OrderRepository;
 import com.kamal.repository.PaymentRepository;
 import com.kamal.repository.UserRepository;

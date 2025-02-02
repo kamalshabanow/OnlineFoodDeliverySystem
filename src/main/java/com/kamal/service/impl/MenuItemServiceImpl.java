@@ -2,8 +2,8 @@ package com.kamal.service.impl;
 
 import com.kamal.dto.request.MenuItemRequestDTO;
 import com.kamal.dto.response.MenuItemResponseDTO;
-import com.kamal.entity.MenuItem;
-import com.kamal.entity.Restaurant;
+import com.kamal.model.entity.MenuItem;
+import com.kamal.model.entity.Restaurant;
 import com.kamal.repository.MenuItemRepository;
 import com.kamal.repository.RestaurantRepository;
 import com.kamal.service.MenuItemService;

@@ -1,7 +1,7 @@
 package com.kamal.controller;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.service.OrderService;

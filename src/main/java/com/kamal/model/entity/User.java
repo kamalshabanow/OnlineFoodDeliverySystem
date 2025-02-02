@@ -1,6 +1,6 @@
-package com.kamal.entity;
+package com.kamal.model.entity;
 
-import com.kamal.constant.UserRole;
+import com.kamal.model.constant.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 

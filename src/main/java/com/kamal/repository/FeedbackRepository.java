@@ -1,7 +1,6 @@
 package com.kamal.repository;
 
-import com.kamal.entity.Feedback;
-import org.springframework.cglib.core.Local;
+import com.kamal.model.entity.Feedback;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
