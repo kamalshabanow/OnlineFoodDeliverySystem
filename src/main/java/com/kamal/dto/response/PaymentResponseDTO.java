@@ -1,7 +1,7 @@
 package com.kamal.dto.response;
 
-import com.kamal.constant.PaymentMethod;
-import com.kamal.constant.PaymentStatus;
+import com.kamal.model.constant.PaymentMethod;
+import com.kamal.model.constant.PaymentStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;

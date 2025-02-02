@@ -2,7 +2,7 @@ package com.kamal.service;
 
 import com.kamal.dto.request.RestaurantRequestDTO;
 import com.kamal.dto.response.RestaurantResponseDTO;
-import com.kamal.entity.Restaurant;
+import com.kamal.model.entity.Restaurant;
 import com.kamal.repository.RestaurantRepository;
 import com.kamal.service.impl.RestaurantServiceImpl;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package com.kamal.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.kamal.constant.UserRole;
+import com.kamal.model.constant.UserRole;
 import lombok.*;
 
 @Getter

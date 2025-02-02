@@ -1,6 +1,6 @@
 package com.kamal.security.service;
 
-import com.kamal.entity.User;
+import com.kamal.model.entity.User;
 import com.kamal.repository.UserRepository;
 import com.kamal.service.UserService;
 import lombok.extern.slf4j.Slf4j;

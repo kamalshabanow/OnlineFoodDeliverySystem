@@ -1,0 +1,6 @@
+name: Build & Deploy Spring App
+
+on:
+  push:
+    branches:
+      - main

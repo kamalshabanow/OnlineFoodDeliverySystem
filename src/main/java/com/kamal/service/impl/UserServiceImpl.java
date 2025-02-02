@@ -1,10 +1,9 @@
 package com.kamal.service.impl;
 
-import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
 import com.kamal.dto.response.UserResponseDTO;
-import com.kamal.entity.User;
+import com.kamal.model.entity.User;
 import com.kamal.repository.UserRepository;
 import com.kamal.service.UserService;
 import lombok.RequiredArgsConstructor;

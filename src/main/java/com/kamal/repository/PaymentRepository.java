@@ -1,7 +1,7 @@
 package com.kamal.repository;
 
-import com.kamal.constant.PaymentStatus;
-import com.kamal.entity.Payment;
+import com.kamal.model.constant.PaymentStatus;
+import com.kamal.model.entity.Payment;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

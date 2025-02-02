@@ -1,4 +1,4 @@
-package com.kamal.constant;
+package com.kamal.model.constant;
 
 public enum UserRole {
 

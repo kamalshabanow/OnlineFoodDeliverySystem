@@ -1,10 +1,8 @@
 package com.kamal.service;
 
-import com.kamal.constant.UserRole;
-import com.kamal.dto.request.RegisterRequestDTO;
 import com.kamal.dto.request.UserRequestDTO;
 import com.kamal.dto.response.UserResponseDTO;
-import com.kamal.entity.User;
+import com.kamal.model.entity.User;
 import com.kamal.repository.UserRepository;
 import com.kamal.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;

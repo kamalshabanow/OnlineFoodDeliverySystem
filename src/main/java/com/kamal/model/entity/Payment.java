@@ -1,8 +1,8 @@
-package com.kamal.entity;
+package com.kamal.model.entity;
 
 
-import com.kamal.constant.PaymentMethod;
-import com.kamal.constant.PaymentStatus;
+import com.kamal.model.constant.PaymentMethod;
+import com.kamal.model.constant.PaymentStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

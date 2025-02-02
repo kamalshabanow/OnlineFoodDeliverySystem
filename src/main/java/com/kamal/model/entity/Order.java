@@ -1,6 +1,6 @@
-package com.kamal.entity;
+package com.kamal.model.entity;
 
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

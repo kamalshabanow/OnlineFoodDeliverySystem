@@ -1,6 +1,6 @@
 package com.kamal.dto.request;
 
-import com.kamal.constant.PaymentMethod;
+import com.kamal.model.constant.PaymentMethod;
 import lombok.*;
 
 @Getter

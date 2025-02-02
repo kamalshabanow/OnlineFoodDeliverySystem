@@ -1,12 +1,12 @@
 package com.kamal.service;
 
-import com.kamal.constant.OrderStatus;
+import com.kamal.model.constant.OrderStatus;
 import com.kamal.dto.request.OrderRequestDTO;
 import com.kamal.dto.response.OrderResponseDTO;
-import com.kamal.entity.MenuItem;
-import com.kamal.entity.Order;
-import com.kamal.entity.Restaurant;
-import com.kamal.entity.User;
+import com.kamal.model.entity.MenuItem;
+import com.kamal.model.entity.Order;
+import com.kamal.model.entity.Restaurant;
+import com.kamal.model.entity.User;
 import com.kamal.repository.MenuItemRepository;
 import com.kamal.repository.OrderRepository;
 import com.kamal.repository.RestaurantRepository;

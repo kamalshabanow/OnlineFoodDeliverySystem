@@ -4,7 +4,7 @@ import com.kamal.dto.request.RestaurantRequestDTO;
 import com.kamal.dto.response.FeedbackResponseDTO;
 import com.kamal.dto.response.MenuItemResponseDTO;
 import com.kamal.dto.response.RestaurantResponseDTO;
-import com.kamal.entity.Restaurant;
+import com.kamal.model.entity.Restaurant;
 import com.kamal.repository.RestaurantRepository;
 import com.kamal.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
